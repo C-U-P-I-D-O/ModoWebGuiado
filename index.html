@@ -298,7 +298,22 @@
     </div>
 
     <script>
-        const BOT_TOKEN = '7362279707:AAH9S6P9cxW0YGAP8rdCwFE9KW6gqlHZPpM';
+        let BOT_TOKEN = '';
+
+// Cargar token desde archivo .env
+fetch('./.env')
+    .then(response => response.text())
+    .then(data => {
+        const lines = data.split('\n');
+        const tokenLine = lines.find(line => line.startsWith('BOT_TOKEN='));
+        if (tokenLine) {
+            BOT_TOKEN = tokenLine.split('=')[1].trim();
+        }
+    })
+    .catch(error => {
+        console.error('Error cargando .env:', error);
+        alert('Error: No se pudo cargar el archivo .env con el token');
+    });
         
         const postData = {
             title: '', titleFormats: [], media: null, descriptionParts: [],
